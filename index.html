@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Alarm Clock</h1>
+
+    <p id="showTime">
+
+    </p>
+    <label for="">Set your Alarm</label>
+    <input type="text" id="input_alarm">
+    <button id="set_btn">Set</button>
+    <div id="set_alarm">
+
+    </div>
+
+    <script>
+        function showTime() {
+            let date = new Date();
+            let hours = String(date.getHours()).padStart(2, '0');
+            let minutes = String(date.getMinutes()).padStart(2, '0')
+            let seconds = String(date.getSeconds()).padStart(2, '0')
+            hours = hours % 12;
+            let ampm = hours <= 12 ? "PM" : "AM";
+            hours = hours ? hours : 12;
+
+            let currentTime = `${hours}:${minutes}:${seconds} ${ampm}`
+            document.getElementById("showTime").innerHTML = currentTime
+
+        }
+        setInterval(() => {
+            showTime()
+        }, 1000)
+
+        function Play() {
+            let audio = new Audio("iphone-ringtone.mp3")
+            audio.play();
+        }
+        document.getElementById("set_btn").addEventListener(('click'),
+            function () {
+                let seconds = document.getElementById("input_alarm").value;              
+
+                const set_Alarm = (seconds) => {
+                    setTimeout(() => {
+                        Play()
+                    }, seconds * 1000)
+                    let d = new Date().getTime()
+                    
+                    setInterval(() => {
+                        secondsLeft = - (new Date().getTime() - (d + seconds * 1000))
+                        if (secondsLeft > 0) {
+                            set_alarm.innerHTML = "Alarm is ringing in " + Math.floor(secondsLeft / 1000) + "seconds"
+                        }
+                    })
+
+                }
+                set_Alarm(seconds);
+            })
+       
+
+
+
+    </script>
+</body>
+
+</html>
